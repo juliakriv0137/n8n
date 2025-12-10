@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AI как доткомы-2: почему пузырь — это нормально и как его пережить</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      color-scheme: light;
+      --bg-page: #f5f5f7;
+      --bg-content: #ffffff;
+      --bg-accent: #eef2ff;
+      --text-main: #222222;
+      --text-muted: #555555;
+      --border-subtle: #e0e0e5;
+      --accent: #3b82f6;
+      --accent-soft: #dbeafe;
+      --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #f8fafc 0, #f5f5f7 45%, #edf2ff 100%);
+      color: var(--text-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    header.site-header {
+      padding: 12px 0 8px;
+      margin-bottom: 8px;
+    }
+
+    .site-header small {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    article {
+      background-color: var(--bg-content);
+      border-radius: var(--radius-lg);
+      padding: 28px 22px 32px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    @media (min-width: 720px) {
+      .page {
+        padding: 32px 20px 56px;
+      }
+
+      article {
+        padding: 32px 32px 40px;
+      }
+    }
+
+    .article-header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 3vw, 2.35rem);
+      line-height: 1.25;
+      margin: 0 0 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin: 0 0 10px;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background-color: #f3f4f6;
+    }
+
+    main {
+      display: block;
+    }
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin: 0 0 10px;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 14px 0 4px;
+      line-height: 1.4;
+    }
+
+    p {
+      margin: 0 0 10px;
+      font-size: 0.98rem;
+    }
+
+    p + p {
+      margin-top: -2px;
+    }
+
+    ul,
+    ol {
+      margin: 6px 0 12px 1.2em;
+      padding-left: 0.4em;
+      font-size: 0.97rem;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .lead {
+      margin-bottom: 26px;
+    }
+
+    .summary-box {
+      background: linear-gradient(135deg, var(--bg-accent), #f8fafc);
+      border-radius: var(--radius-md);
+      padding: 14px 14px 12px;
+      border: 1px solid #c7d2fe;
+    }
+
+    .summary-box h2 {
+      font-size: 1.02rem;
+      margin-bottom: 6px;
+    }
+
+    .summary-box p {
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    .summary-box strong {
+      font-weight: 600;
+    }
+
+    .accent {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .image-block {
+      margin: 18px 0 18px;
+      background-color: #f9fafb;
+      border-radius: var(--radius-md);
+      border: 1px dashed #cbd5e1;
+      padding: 10px;
+    }
+
+    .image-block img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius-sm);
+      background-color: #e5e7eb;
+    }
+
+    .image-block figcaption {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    blockquote {
+      margin: 10px 0 14px;
+      padding: 8px 14px;
+      border-left: 3px solid var(--accent-soft);
+      background-color: #f9fafb;
+      border-radius: 0 10px 10px 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .highlight {
+      background: #fef3c7;
+      padding: 0 3px;
+      border-radius: 4px;
+    }
+
+    .pill-label {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background-color: #f3f4ff;
+      color: #4b5563;
+      margin-bottom: 4px;
+    }
+
+    .columns-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    @media (min-width: 780px) {
+      .columns-2 {
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      }
+    }
+
+    .callout {
+      background-color: #f9fafb;
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.95rem;
+    }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    .checklist li::before {
+      content: "•";
+      display: inline-block;
+      margin-right: 6px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background-color: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+    }
+
+    footer h2 {
+      font-size: 0.96rem;
+      margin-bottom: 6px;
+    }
+
+    footer ul {
+      margin: 4px 0 0 1em;
+    }
+
+    footer li {
+      margin-bottom: 2px;
+    }
+
+    @media (max-width: 520px) {
+      .meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      article {
+        padding: 22px 16px 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <small>Аналитика &nbsp;•&nbsp; Технологии</small>
+    </header>
+
+    <article>
+      <header class="article-header">
+        <h1>AI как доткомы-2: почему пузырь — это нормально и как его пережить</h1>
+        <p class="subtitle">Индустрия AI сегодня очень напоминает пузырь доткомов конца 90-х — и в этом есть своя логика и польза.</p>
+        <div class="meta">
+          <span>Тема: AI, стартапы, инвестиции</span>
+          <span>Чтение: ~10–12 минут</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="lead" aria-label="Краткое содержание">
+          <aside class="summary-box">
+            <span class="pill-label">Краткое содержание</span>
+            <p>Индустрия AI сейчас очень похожа на пузырь доткомов конца 90-х. Ажиотаж вокруг AI напоминает эйфорию от «новой экономики» интернета.</p>
+            <p>Но пузыри — это нормальный этап развития прорывных технологий. А главное — мы уже знаем, <strong>как в них выживать</strong> и <strong>что остаётся после схлопывания</strong>. Дальше — подробнее, с параллелями, выводами и практическими рекомендациями.</p>
+          </aside>
+        </section>
+
+        <section id="dejavu">
+          <h2>Дежавю из 1999-го</h2>
+          <p>«AI революционизирует всё», «конец старым бизнес-моделям», «нужно срочно вкладываться в AI-стартапы». Знакомые заголовки? Кажется, что это 2024 год, но на самом деле можно просто заменить <span class="highlight">.com</span> на <span class="highlight">AI</span> в газетах 1999 года — и получить то же самое.</p>
+          <p>Каждый день мы видим AI-стартапы с космическими оценками и минимальной выручкой. Корпорации в панике лепят AI-функции в продукты, которыми никто не пользуется. Инвесторы гонятся за любым проектом с ChatGPT в презентации. А фаундеры гордо рассказывают, как их «уникальная обёртка вокруг GPT-4» изменит целую индустрию.</p>
+          <p>Если вам кажется, что где-то вы это уже видели — вы правы. В 1999-м было то же самое, только вместо AI был интернет.</p>
+
+          <figure class="image-block">
+            <!-- PROMPT: Сравнение первых полос СМИ 1999 и 2024 годов. В колонке слева заголовки про ".com" и "новую экономику интернета", в колонке справа — те же заголовки, но с заменой ".com" на "AI". Внизу подпись о том, что изменилось только слово. -->
+            <img src="#IMAGE_1" alt="Коллаж заголовков СМИ 1999 и 2024 годов, где .com заменено на AI" />
+            <figcaption>Смена лейбла: те же заголовки, другой buzzword.</figcaption>
+          </figure>
+        </section>
+
+        <section id="ai-bubble">
+          <h2>AI-хайп 2024 года: все признаки пузыря</h2>
+          <p>Посмотрим на цифры. В 2023 году инвестиции в AI-стартапы выросли на 300% по сравнению с 2022-м. Количество AI-единорогов (частных компаний с оценкой более $1&nbsp;млрд) увеличилось втрое. При этом большинство этих компаний либо убыточны, либо имеют минимальную выручку.</p>
+          <p>Типичный пример: стартап делает простую обёртку вокруг языковой модели, добавляет модное слово GenAI в презентацию и получает оценку в десятки миллионов долларов. Без понятной экономики, без уникальной технологии, часто даже без работающего продукта.</p>
+
+          <figure class="image-block">
+            <!-- PROMPT: Линейный или столбчатый график роста инвестиций в AI-стартапы с 2020 по 2024 годы. Отражён резкий скачок в 2023–2024 годах, подписаны значения по годам и источники данных. -->
+            <img src="#IMAGE_2" alt="График роста инвестиций в AI-стартапы 2020–2024 годы" />
+            <figcaption>Инвестиции в AI-стартапы: экспоненциальный рост за последние годы.</figcaption>
+          </figure>
+
+          <p>А вот что происходит в корпорациях. По данным McKinsey, 80% компаний заявляют о «стратегических AI-инициативах», но только 20% смогли внедрить хотя бы один работающий AI-проект. Остальные либо застряли на пилотах, либо сделали красивую демку для отчёта.</p>
+        </section>
+
+        <section id="dotcom-history">
+          <h2>Как надувался и лопнул пузырь доткомов</h2>
+          <p>Вернёмся в 1995–2000 годы. Появление веба взорвало фантазию инвесторов. Любая компания, добавившая <span class="highlight">.com</span> к названию, могла привлечь миллионы долларов. Оценки росли как на дрожжах. NASDAQ взлетел с 1000 до 5000 пунктов за пять лет.</p>
+
+          <figure class="image-block">
+            <!-- PROMPT: График индекса NASDAQ с 1995 по 2002 год. Видно резкое надувание и последующее падение в 2000–2002 годах. На графике помечены ключевые события: рост доткомов, пик пузыря, крах, восстановление. -->
+            <img src="#IMAGE_3" alt="График индекса NASDAQ 1995–2002 с отметками пика и падения дотком-пузыря" />
+            <figcaption>NASDAQ во время дотком-пузыря: быстрый взлёт и болезненное приземление.</figcaption>
+          </figure>
+
+          <p>Pets.com стал символом той эпохи. Компания потратила миллионы на рекламу с милым носочным puppie, вышла на IPO в начале 2000 года, а к концу года обанкротилась.</p>
+          <p>Почему? Потому что тратила $80 на маркетинг, чтобы продать товаров на $70.</p>
+
+          <p>Другой пример — Webvan. Идея была правильной: доставка продуктов через интернет. Но компания построила гигантские автоматизированные склады, купила сотни грузовиков... и разорилась. Инфраструктура стоила безумных денег, а люди ещё не были готовы массово заказывать еду онлайн.</p>
+
+          <p>Но были и другие истории. <span class="accent">Amazon</span> пережил падение акций на 90% и стал гигантом. <span class="accent">Google</span> вообще появился поздно, в разгар пузыря, но построил устойчивый бизнес на рекламной модели. А инфраструктура доткомов (дата-центры, оптоволокно, софт) осталась и стала основой современного интернета.</p>
+        </section>
+
+        <section id="parallels">
+          <h2>Параллели между AI-хайпом и дотком-пузырём</h2>
+
+          <figure class="image-block">
+            <!-- PROMPT: Таблица или инфографика с двумя колонками: «Доткомы» и «AI». В строках сравниваются: новая эра, отношение к экономике, мода на лейблы, ожидания скорости изменений. Краткие тезисы в каждой ячейке. -->
+            <img src="#IMAGE_4" alt="Таблица сравнения пузыря доткомов и текущего AI-хайпа по ключевым признакам" />
+            <figcaption>AI 2024 vs доткомы 1999: разные технологии, очень похожая динамика.</figcaption>
+          </figure>
+
+          <ol>
+            <li>
+              <h3>«Новая эра»</h3>
+              <p><strong>Тогда:</strong> «Интернет изменит всё, старые законы бизнеса не работают».</p>
+              <p><strong>Сейчас:</strong> «AI изменит всё, старые методы работы устарели».</p>
+            </li>
+            <li>
+              <h3>Игнорирование экономики</h3>
+              <p><strong>Тогда:</strong> «Сначала захватим рынок, потом придумаем, как зарабатывать».</p>
+              <p><strong>Сейчас:</strong> «Главное набрать пользователей, монетизацию добавим потом».</p>
+            </li>
+            <li>
+              <h3>Мода на лейблы</h3>
+              <p><strong>Тогда:</strong> добавь <span class="highlight">.com</span> к названию — и ты стартап.</p>
+              <p><strong>Сейчас:</strong> добавь <span class="highlight">AI</span> в презентацию — и ты инновационная компания.</p>
+            </li>
+            <li>
+              <h3>Переоценка скорости изменений</h3>
+              <p><strong>Тогда:</strong> «Через год все будут покупать только онлайн».</p>
+              <p><strong>Сейчас:</strong> «Через полгода AI заменит программистов, дизайнеров и копирайтеров».</p>
+            </li>
+          </ol>
+        </section>
+
+        <section id="not-just-bubble">
+          <h2>Почему AI-пузырь — не совсем пузырь</h2>
+          <p>Есть важное отличие: AI уже сейчас даёт реальную ценность.</p>
+          <ul>
+            <li>GitHub Copilot ускоряет работу разработчиков на 30–50%.</li>
+            <li>Системы на базе GPT обрабатывают простые запросы в поддержку быстрее людей.</li>
+            <li>Генеративные модели реально помогают в создании контента и прототипов.</li>
+          </ul>
+
+          <figure class="image-block">
+            <!-- PROMPT: Несколько сравнительных графиков или диаграмм, показывающих рост продуктивности при использовании AI-инструментов: скорость разработки с GitHub Copilot, время обработки запросов в поддержку, ускорение создания контента. -->
+            <img src="#IMAGE_5" alt="Графики роста продуктивности при использовании AI-инструментов" />
+            <figcaption>AI уже сейчас измеримо повышает продуктивность людей и команд.</figcaption>
+          </figure>
+
+          <p>В отличие от интернета 1999 года, AI ложится на готовую цифровую инфраструктуру. Не нужно тянуть кабели и строить дата-центры — есть облака, API, готовые модели. Порог входа намного ниже.</p>
+        </section>
+
+        <section id="why-bubbles-ok">
+          <h2>Почему технологические пузыри — это нормально и даже полезно</h2>
+          <p>Пузырь — это не катастрофа. Это механизм быстрого перераспределения ресурсов к новой технологии. Да, много денег будет потеряно. Да, куча компаний разорится. Но останется три важные вещи:</p>
+
+          <ol>
+            <li>
+              <h3>Инфраструктура</h3>
+              <p>После доткомов остались сети, дата-центры, протоколы. После AI останутся модели, датасеты, платформы.</p>
+            </li>
+            <li>
+              <h3>Компетенции</h3>
+              <p>Тысячи людей учатся работать с AI. Даже если 80% уйдут, останется критическая масса специалистов.</p>
+            </li>
+            <li>
+              <h3>Работающие бизнес-модели</h3>
+              <p>Пузырь как фильтр: выживают те, кто нашёл реальную ценность для клиентов.</p>
+            </li>
+          </ol>
+
+          <figure class="image-block">
+            <!-- PROMPT: Схема или диаграмма «Что остаётся после пузыря»: три блока — инфраструктура, компетенции, бизнес-модели. Стрелка от фазы «хайп и крах» к фазе «устойчивый рост». -->
+            <img src="#IMAGE_6" alt="Схема того, что остаётся после технологического пузыря: инфраструктура, компетенции, бизнес-модели" />
+            <figcaption>Хайп проходит, но инфраструктура, экспертиза и бизнес-модели остаются.</figcaption>
+          </figure>
+        </section>
+
+        <section id="after-pop">
+          <h2>Что нас ждёт в AI после «хлопка пузыря»</h2>
+
+          <ol>
+            <li>
+              <h3>Консолидация рынка</h3>
+              <ul>
+                <li>2–3 крупных провайдера базовых моделей.</li>
+                <li>Десятки сильных нишевых игроков.</li>
+                <li>Поглощение или закрытие сотен мелких проектов.</li>
+              </ul>
+            </li>
+            <li>
+              <h3>От хайпа к пользе</h3>
+              <ul>
+                <li>Меньше разговоров про «AI революцию».</li>
+                <li>Больше фокуса на конкретных бизнес-задачах.</li>
+                <li>AI как инфраструктура, а не как фича.</li>
+              </ul>
+            </li>
+            <li>
+              <h3>Стандартизация</h3>
+              <ul>
+                <li>Появление отраслевых стандартов.</li>
+                <li>Регулирование использования AI.</li>
+                <li>Акцент на безопасности и этике.</li>
+              </ul>
+            </li>
+          </ol>
+        </section>
+
+        <section id="what-to-do-now">
+          <h2>Как действовать прямо сейчас</h2>
+
+          <div class="columns-2">
+            <section>
+              <h3>Для предпринимателей</h3>
+              <ul class="checklist">
+                <li>Не гонитесь за модой, ищите реальную боль клиентов
